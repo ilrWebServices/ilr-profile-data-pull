@@ -2,10 +2,9 @@
 
 /**
  * @file
- * Common functions that many Drupal modules will need to reference.
+ * Functions for pulling data from ldap, Activity Insight, and legacy ilr web directory
  *
- * The functions that are critical and need to be available even when serving
- * a cached page are instead located in bootstrap.inc.
+ *
  */
 
 require 'ilr-faculty-data-conf.php';
