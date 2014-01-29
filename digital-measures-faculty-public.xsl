@@ -302,6 +302,12 @@
     </ldap_employee_type>
   </xsl:template>
 
+  <xsl:template match="dm:ldap_department_name">
+    <ldap_department_name>
+    <xsl:apply-templates/>
+    </ldap_department_name>
+  </xsl:template>
+
   <xsl:template match="dm:ldap_department">
     <ldap_department>
     <xsl:apply-templates/>
@@ -324,6 +330,18 @@
     <ldap_mail_nickname>
     <xsl:apply-templates/>
     </ldap_mail_nickname>
+  </xsl:template>
+
+  <xsl:template match="dm:ldap_nickname">
+    <ldap_nickname>
+    <xsl:apply-templates/>
+    </ldap_nickname>
+  </xsl:template>
+
+  <xsl:template match="dm:ilrweb_publications_type">
+    <ilrweb_publications_type>
+    <xsl:apply-templates/>
+    </ilrweb_publications_type>
   </xsl:template>
 
   <xsl:template match="dm:ilrweb_publications_doc">
@@ -352,8 +370,8 @@
     </xsl:text>
   </xsl:template>
 
-  <xsl:template match="dm:ilrweb_biography">
-    <ilrweb_biography>
+  <xsl:template match="dm:ilrweb_overview">
+    <ilrweb_overview>
     <xsl:if test=". != ''">
       <xsl:text disable-output-escaping="yes">&lt;</xsl:text>
       <xsl:text disable-output-escaping="yes">![CDATA[
@@ -363,15 +381,7 @@
       ]]</xsl:text>
       <xsl:text disable-output-escaping="yes">></xsl:text>
     </xsl:if>
-    </ilrweb_biography>
-    <xsl:text>
-    </xsl:text>
-  </xsl:template>
-
-  <xsl:template match="dm:ilrweb_experience">
-    <ilrweb_experience>
-    <xsl:apply-templates/>
-    </ilrweb_experience>
+    </ilrweb_overview>
     <xsl:text>
     </xsl:text>
   </xsl:template>
@@ -402,6 +412,12 @@
     <ilrweb_other_expertise>
     <xsl:apply-templates/>
     </ilrweb_other_expertise>
+  </xsl:template>
+
+  <xsl:template match="dm:ilrweb_vita_type">
+    <ilrweb_vita_type>
+    <xsl:apply-templates/>
+    </ilrweb_vita_type>
   </xsl:template>
 
   <xsl:template match="dm:ilrweb_vita_file">
