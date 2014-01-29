@@ -108,15 +108,13 @@
                 <xsl:if test=". != ''">
                   <xsl:text disable-output-escaping="yes">
                   &lt;</xsl:text>
-                  <xsl:text disable-output-escaping="yes">![CDATA[
-                  </xsl:text>
+                  <xsl:text disable-output-escaping="yes">![CDATA[</xsl:text>
                   <ul class="professional-activities">
                   <xsl:apply-templates select="dm:PRESENT">
                     <xsl:sort order="descending" select="dm:DATE_START"/>
                   </xsl:apply-templates>
                   </ul>
-                  <xsl:text disable-output-escaping="yes">
-                  ]]</xsl:text>
+                  <xsl:text disable-output-escaping="yes">]]</xsl:text>
                   <xsl:text disable-output-escaping="yes">>
                   </xsl:text>
                 </xsl:if>
@@ -133,15 +131,13 @@
                 <xsl:if test=". != ''">
                   <xsl:text disable-output-escaping="yes">
                   &lt;</xsl:text>
-                  <xsl:text disable-output-escaping="yes">![CDATA[
-                  </xsl:text>
+                  <xsl:text disable-output-escaping="yes">![CDATA[</xsl:text>
                   <ul class="honors">
                   <xsl:apply-templates select="dm:AWARDHONOR">
                     <xsl:sort order="descending" select="DTY_DATE"/>
                   </xsl:apply-templates>
                   </ul>
-                  <xsl:text disable-output-escaping="yes">
-                  ]]</xsl:text>
+                  <xsl:text disable-output-escaping="yes">]]</xsl:text>
                   <xsl:text disable-output-escaping="yes">>
                   </xsl:text>
                 </xsl:if>
@@ -157,8 +153,7 @@
                 <xsl:if test=". != ''">
                   <xsl:text disable-output-escaping="yes">
                   &lt;</xsl:text>
-                  <xsl:text disable-output-escaping="yes">![CDATA[
-                  </xsl:text>
+                  <xsl:text disable-output-escaping="yes">![CDATA[</xsl:text>
                   <ul class="articles">
                   <xsl:apply-templates select="dm:INTELLCONT_JOURNAL">
                     <xsl:sort order="descending" select="DTY_PUB"/>
