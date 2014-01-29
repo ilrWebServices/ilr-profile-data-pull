@@ -31,18 +31,33 @@ function verify_configuration() {
   return $result;
 }
 
-$LDAP_ATTRIBUTES = ['sn'
-  , 'givenname'
-  , 'mailnickname'
-  , 'title'
-  , 'physicaldeliveryofficename'
-  , 'telephonenumber'
-  , 'displayname'
-  , 'department'
-  , 'employeetype'
-  , 'personaltitle'
+// $LDAP_ATTRIBUTES = ['sn'
+//   , 'givenname'
+//   , 'mailnickname'
+//   , 'title'
+//   , 'physicaldeliveryofficename'
+//   , 'telephonenumber'
+//   , 'displayname'
+//   , 'department'
+//   , 'employeetype'
+//   , 'personaltitle'
+//   , 'uid'
+//   , 'mail'];
+
+$LDAP_ATTRIBUTES = ['displayname'
+  , 'cornelleducampusaddress'
+  , 'cornelleducampusphone'
+  , 'edupersonprincipalname'
+  , 'cornelleduunivtitle1'
+  , 'cornelleduwrkngtitle1'
+  , 'cornelledutype'
+  , 'cornelledudeptid1'
+  , 'cornelledudeptname1'
   , 'uid'
-  , 'mail'];
+  , 'sn'
+  , 'givenname'
+  , 'mailalternateaddress'
+  , 'edupersonnickname'];
 
 function query_ai($uri) {
   $curl = curl_init();
@@ -151,7 +166,9 @@ function get_ldap_info($filter, $attributes, $start) {
   $ds=ldap_connect($GLOBALS['LDAP_SERVER']);
 
   if ($ds) {
-    $r=ldap_bind($ds, $GLOBALS['LDAP_USERNAME'], $GLOBALS['LDAP_PASSWORD']);
+    if (in_array('LDAP_USERNAME', $GLOBALS) && in_array('LDAP_PASSWORD', $GLOBALS)) {
+      $r=ldap_bind($ds, $GLOBALS['LDAP_USERNAME'], $GLOBALS['LDAP_PASSWORD']);
+    }
     $sr=ldap_search($ds, $start, $filter, $attributes);
     $ret = ldap_get_entries($ds, $sr);
     ldap_close($ds);
@@ -170,18 +187,35 @@ function ldap2xml($ldap) {
 
   if (count($ldap)) {
     $whiteLabels = [];
+
+    // $whiteLabels['displayname'] = "ldap_display_name";
+    // $whiteLabels['physicaldeliveryofficename'] = "ldap_campus_address";
+    // $whiteLabels['telephonenumber'] = "ldap_campus_phone";
+    // $whiteLabels['mail'] = "ldap_email";
+    // $whiteLabels['title'] = "ldap_working_title1";
+    // $whiteLabels['personaltitle'] = "ldap_working_title2";
+    // $whiteLabels['employeetype'] = "ldap_employee_type";
+    // $whiteLabels['department'] = "ldap_department";
+    // $whiteLabels['uid'] = "ldap_uid";
+    // $whiteLabels['sn'] = "ldap_last_name";
+    // $whiteLabels['givenname'] = "ldap_first_name";
+    // $whiteLabels['mailnickname'] = "ldap_mail_nickname";
+
+
     $whiteLabels['displayname'] = "ldap_display_name";
-    $whiteLabels['physicaldeliveryofficename'] = "ldap_campus_address";
-    $whiteLabels['telephonenumber'] = "ldap_campus_phone";
-    $whiteLabels['mail'] = "ldap_email";
-    $whiteLabels['title'] = "ldap_working_title1";
-    $whiteLabels['personaltitle'] = "ldap_working_title2";
-    $whiteLabels['employeetype'] = "ldap_employee_type";
-    $whiteLabels['department'] = "ldap_department";
+    $whiteLabels['cornelleducampusaddress'] = "ldap_campus_address";
+    $whiteLabels['cornelleducampusphone'] = "ldap_campus_phone";
+    $whiteLabels['edupersonprincipalname'] = "ldap_email";
+    $whiteLabels['cornelleduunivtitle1'] = "ldap_working_title1";
+    $whiteLabels['cornelleduwrkngtitle1'] = "ldap_working_title2";
+    $whiteLabels['cornelledutype'] = "ldap_employee_type";
+    $whiteLabels['cornelledudeptid1'] = "ldap_department";
+    $whiteLabels['cornelledudeptname1'] = "ldap_department_name";
     $whiteLabels['uid'] = "ldap_uid";
     $whiteLabels['sn'] = "ldap_last_name";
     $whiteLabels['givenname'] = "ldap_first_name";
-    $whiteLabels['mailnickname'] = "ldap_mail_nickname";
+    $whiteLabels['mailalternateaddress'] = "ldap_mail_nickname";
+    $whiteLabels['edupersonnickname'] = "ldap_nickname";
 
       $result[] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
     $result[] = "<Data dmd:date=\"2010-02-23\" xmlns=\"http://www.digitalmeasures.com/schema/data\" xmlns:dmd=\"http://www.digitalmeasures.com/schema/data-metadata\">";
@@ -193,8 +227,14 @@ function ldap2xml($ldap) {
           if (array_key_exists($attr, $person)) {
             for ($j=0; $j<count($person[$attr])-1; $j++) {
               $suffix = count($person[$attr]) > 2 ? $j + 1 : '';
-              if (strlen(trim($person[$attr][$j])) > 0) {
-                $result[] = "\t\t<$whiteLabels[$attr]" . "$suffix>" . htmlspecialchars($person[$attr][$j], ENT_QUOTES, "UTF-8") . "</$whiteLabels[$attr]" . "$suffix>";
+              $thisVal = trim($person[$attr][$j]);
+              if ($attr == 'edupersonprincipalname'
+                  && in_array('mailalternateaddress', $person) 
+                  && ! empty($person['mailalternateaddress'][$j]) ) {
+                $thisVal = trim($person['mailalternateaddress'][$j]) . '@cornell.edu';
+              }
+              if (strlen($thisVal) > 0) {
+                $result[] = "\t\t<$whiteLabels[$attr]" . "$suffix>" . htmlspecialchars($thisVal, ENT_QUOTES, "UTF-8") . "</$whiteLabels[$attr]" . "$suffix>";
               } else {
                 $result[] = "\t\t<$whiteLabels[$attr]" . "$suffix/>";
               }
