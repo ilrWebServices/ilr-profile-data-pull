@@ -88,7 +88,7 @@
               </xsl:text>
 
               <overview>
-                  <xsl:apply-templates select="dm:PCI/dm:BIO"/>
+                  <xsl:apply-templates select="dm:NARRATIVE_INTERESTS/dm:BIO"/>
               </overview><xsl:text>
               </xsl:text>
 
@@ -516,6 +516,11 @@
       </degree><xsl:text>
       </xsl:text>
     </xsl:if>
+  </xsl:template>
+
+  <xsl:template match="dm:NARRATIVE_INTERESTS/dm:BIO">
+    <xsl:apply-templates/><xsl:text>
+    </xsl:text>
   </xsl:template>
 
   <xsl:template match="dm:OUTREACH_STATEMENT/dm:OUTREACH_STATEMENT_KEYWORD/dm:KEYWORD">
