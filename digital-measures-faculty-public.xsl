@@ -135,7 +135,7 @@
                   &lt;</xsl:text>
                   <xsl:text disable-output-escaping="yes">![CDATA[
                   </xsl:text>
-                  <ul class="articles">
+                  <ul class="honors">
                   <xsl:apply-templates select="dm:AWARDHONOR">
                     <xsl:sort order="descending" select="DTY_DATE"/>
                   </xsl:apply-templates>
