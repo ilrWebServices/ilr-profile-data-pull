@@ -643,7 +643,7 @@
 
   <xsl:template match="dm:INTELLCONT_JOURNAL">
     <xsl:choose>
-    <xsl:when test="dm:PUBLIC_VIEW='Yes'">
+    <xsl:when test="dm:PUBLIC_VIEW='Yes' and dm:USER_REFERENCE_CREATOR='Yes'">
       <li class="journal-article">
         <xsl:apply-templates select="dm:INTELLCONT_JOURNAL_AUTH"/><xsl:text>. </xsl:text>
         <span class="year"><xsl:value-of select="dm:DTY_PUB"/>. </span>
@@ -733,7 +733,7 @@
   <xsl:template name="outputpub">
     <xsl:param name="pubtype" />
       <xsl:choose>
-      <xsl:when test="dm:CONTYPE=$pubtype and dm:PUBLIC_VIEW='Yes'">
+      <xsl:when test="dm:CONTYPE=$pubtype and dm:PUBLIC_VIEW='Yes' and dm:USER_REFERENCE_CREATOR='Yes'">
         <li class="publication">
           <span class="title"><xsl:value-of select="dm:TITLE"/>. </span>
           <span class="book-title"><xsl:value-of select="dm:BOOK_TITLE"/>. </span>
