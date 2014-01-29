@@ -95,6 +95,10 @@ function xslt_transform($xml, $xsl, $format='xml') {
   }
 }
 
+function stripEmptyCDATA($xml) {
+  return preg_replace('/<!\[CDATA\[(<ul class="[^"]+"><\/ul>)+\]\]>/i', '', $xml);
+}
+
 function doc_append(&$doc1, $doc2) {
   // get 'Data' element of document 1
   // $data = $doc1->getElementsByTagName('Data')->item(0);
@@ -229,7 +233,7 @@ function ldap2xml($ldap) {
               $suffix = count($person[$attr]) > 2 ? $j + 1 : '';
               $thisVal = trim($person[$attr][$j]);
               if ($attr == 'edupersonprincipalname'
-                  && in_array('mailalternateaddress', $person) 
+                  && in_array('mailalternateaddress', $person)
                   && ! empty($person['mailalternateaddress'][$j]) ) {
                 $thisVal = trim($person['mailalternateaddress'][$j]) . '@cornell.edu';
               }
