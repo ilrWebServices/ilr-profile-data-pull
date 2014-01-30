@@ -73,18 +73,51 @@
               </education><xsl:text>
               </xsl:text>
 
+              <teaching_statement>
+                  <xsl:apply-templates select="dm:NARRATIVE_INTERESTS/dm:FOCUS_TEACH"/>
+              </teaching_statement><xsl:text>
+              </xsl:text>
+
               <research_statement>
-                  <xsl:apply-templates select="dm:RESEARCH_STATEMENT/dm:CONCENTRATION"/>
-                <xsl:text>
-                </xsl:text>
+                  <xsl:apply-templates select="dm:NARRATIVE_INTERESTS/dm:FOCUS_RESEARCH"/>
               </research_statement><xsl:text>
               </xsl:text>
 
-              <keywords>
+              <research_statement_short>
+                  <xsl:apply-templates select="dm:NARRATIVE_INTERESTS/dm:FOCUS_RESEARCH_SHORT"/>
+              </research_statement_short><xsl:text>
+              </xsl:text>
+
+              <research_areas><xsl:text>
+                </xsl:text>
+                  <xsl:apply-templates select="dm:NARRATIVE_INTERESTS/dm:RESEARCH_AREA/dm:AREA"/>
+              </research_areas><xsl:text>
+              </xsl:text>
+
+              <areas_of_expertise><xsl:text>
+                </xsl:text>
+                  <xsl:apply-templates select="dm:NARRATIVE_INTERESTS/dm:CONCENTRATION"/>
+              </areas_of_expertise><xsl:text>
+              </xsl:text>
+
+              <other_expertise>
+                  <xsl:apply-templates select="dm:NARRATIVE_INTERESTS/dm:CONCENTRATION_OTHER"/>
+              </other_expertise><xsl:text>
+              </xsl:text>
+
+              <teaching_keywords>
+                <xsl:apply-templates select="dm:NARRATIVE_INTERESTS/dm:TEACHING_KEYWORD/dm:KEYWORD"/>
+              </teaching_keywords><xsl:text>
+              </xsl:text>
+
+              <research_keywords>
+                <xsl:apply-templates select="dm:NARRATIVE_INTERESTS/dm:RESEARCH_KEYWORD/dm:KEYWORD"/>
+              </research_keywords><xsl:text>
+              </xsl:text>
+
+              <outreach_keywords>
                 <xsl:apply-templates select="dm:OUTREACH_STATEMENT/dm:OUTREACH_STATEMENT_KEYWORD/dm:KEYWORD"/>
-                <xsl:apply-templates select="dm:RESEARCH_STATEMENT/dm:RESEARCH_STATEMENT_KEYWORD/dm:KEYWORD"/>
-                <xsl:apply-templates select="dm:TEACHING_STATEMENT/dm:TEACHING_STATEMENT_KEYWORD/dm:KEYWORD"/>
-              </keywords><xsl:text>
+              </outreach_keywords><xsl:text>
               </xsl:text>
 
               <overview>
@@ -92,14 +125,9 @@
               </overview><xsl:text>
               </xsl:text>
 
-              <trefocus>
-                <xsl:apply-templates select="dm:RESEARCH_STATEMENT"/>
-
+              <outreach_activities>
                 <xsl:apply-templates select="dm:OUTREACH_STATEMENT"/>
-
-                <xsl:apply-templates select="dm:TEACHING_STATEMENT"/>
-
-              </trefocus>
+              </outreach_activities>
 
               <xsl:text>
               </xsl:text>
@@ -459,21 +487,27 @@
 
   <!--  efb13 2012-02-13 chg concentration from         -->
   <!--   research-statement to 3 statement keywords        -->
-  <xsl:template match="dm:RESEARCH_STATEMENT/dm:CONCENTRATION">
+  <xsl:template match="dm:NARRATIVE_INTERESTS/dm:CONCENTRATION">
     <xsl:choose>
       <xsl:when test="position() = 1">
-        <xsl:apply-templates select="dm:RESEARCH_STATEMENT/dm:CONCENTRATION"/>
+        <xsl:apply-templates select="dm:NARRATIVE_INTERESTS/dm:CONCENTRATION"/>
       </xsl:when>
       <xsl:otherwise>
-        <concentration />
+        <area_of_expertise />
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="dm:RESEARCH_STATEMENT/dm:CONCENTRATION">
-    <concentration>
+  <xsl:template match="dm:NARRATIVE_INTERESTS/dm:CONCENTRATION">
+    <area_of_expertise>
       <xsl:apply-templates/>
-    </concentration>
+    </area_of_expertise><xsl:text>
+    </xsl:text>
+  </xsl:template>
+
+  <xsl:template match="dm:NARRATIVE_INTERESTS/dm:CONCENTRATION_OTHER">
+    <xsl:apply-templates/><xsl:text>
+    </xsl:text>
   </xsl:template>
 
   <xsl:template match="dm:EDUCATION">
@@ -523,16 +557,39 @@
     </xsl:text>
   </xsl:template>
 
+  <xsl:template match="dm:NARRATIVE_INTERESTS/dm:FOCUS_TEACH">
+    <xsl:apply-templates/><xsl:text>
+    </xsl:text>
+  </xsl:template>
+
+  <xsl:template match="dm:NARRATIVE_INTERESTS/dm:FOCUS_RESEARCH">
+    <xsl:apply-templates/><xsl:text>
+    </xsl:text>
+  </xsl:template>
+
+  <xsl:template match="dm:NARRATIVE_INTERESTS/dm:FOCUS_RESEARCH_SHORT">
+    <xsl:apply-templates/><xsl:text>
+    </xsl:text>
+  </xsl:template>
+
   <xsl:template match="dm:OUTREACH_STATEMENT/dm:OUTREACH_STATEMENT_KEYWORD/dm:KEYWORD">
-    <xsl:value-of select="normalize-space(.)"/><xsl:text>|</xsl:text>
+    <keyword><xsl:value-of select="normalize-space(.)"/></keyword><xsl:text>
+    </xsl:text>
   </xsl:template>
 
-  <xsl:template match="dm:RESEARCH_STATEMENT/dm:RESEARCH_STATEMENT_KEYWORD/dm:KEYWORD">
-    <xsl:value-of select="normalize-space(.)"/><xsl:text>|</xsl:text>
+  <xsl:template match="dm:NARRATIVE_INTERESTS/dm:RESEARCH_KEYWORD/dm:KEYWORD">
+    <keyword><xsl:value-of select="normalize-space(.)"/></keyword><xsl:text>
+    </xsl:text>
   </xsl:template>
 
-  <xsl:template match="dm:TEACHING_STATEMENT/dm:TEACHING_STATEMENT_KEYWORD/dm:KEYWORD">
-    <xsl:value-of select="normalize-space(.)"/><xsl:text>|</xsl:text>
+  <xsl:template match="dm:NARRATIVE_INTERESTS/dm:TEACHING_KEYWORD/dm:KEYWORD">
+    <keyword><xsl:value-of select="normalize-space(.)"/></keyword><xsl:text>
+    </xsl:text>
+  </xsl:template>
+
+  <xsl:template match="dm:NARRATIVE_INTERESTS/dm:RESEARCH_AREA/dm:AREA">
+    <area><xsl:value-of select="normalize-space(.)"/></area><xsl:text>
+    </xsl:text>
   </xsl:template>
 
   <xsl:template match="dm:RESEARCH_STATEMENT">
@@ -561,27 +618,15 @@
   </xsl:template>
 
   <xsl:template match="dm:OUTREACH_STATEMENT">
-    <xsl:choose>
-      <xsl:when test="dm:PUBLIC_VIEW='Yes'">
+      <xsl:if test="dm:PUBLIC_VIEW='Yes'">
         <xsl:apply-templates select="dm:INTERESTS"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <focus>
-          <type>Extention/Outreach Focus</type>
-          <description />
-        </focus><xsl:text>
-        </xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
+      </xsl:if>
   </xsl:template>
 
   <xsl:template match="dm:OUTREACH_STATEMENT/dm:INTERESTS">
-    <focus>
-      <type>Extention/Outreach Focus</type>
-      <description>
+     <outreach_activity>
         <xsl:apply-templates/>
-      </description>
-    </focus><xsl:text>
+      </outreach_activity><xsl:text>
     </xsl:text>
   </xsl:template>
 
