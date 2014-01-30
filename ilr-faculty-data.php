@@ -223,7 +223,7 @@ function ldap2xml($ldap) {
     $result[] = "<Data dmd:date=\"2010-02-23\" xmlns=\"http://www.digitalmeasures.com/schema/data\" xmlns:dmd=\"http://www.digitalmeasures.com/schema/data-metadata\">";
 
     foreach($ldap AS $person) {
-      if (is_array($person)) {
+      if (is_array($person) && $person['cornelledutype'][0] != 'alumni') {
         $result[] = "\t<Record username=\"" . $person['uid'][0] . "\">";
         foreach ($GLOBALS['LDAP_ATTRIBUTES'] as $attr) {
           if (array_key_exists($attr, $person)) {
