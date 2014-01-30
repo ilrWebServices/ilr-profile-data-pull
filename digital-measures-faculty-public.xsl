@@ -361,6 +361,12 @@
     </ldap_nickname>
   </xsl:template>
 
+  <xsl:template match="dm:ldap_profile_type">
+    <ldap_profile_type>
+    <xsl:apply-templates/>
+    </ldap_profile_type>
+  </xsl:template>
+
   <xsl:template match="dm:ilrweb_publications_type">
     <ilrweb_publications_type>
     <xsl:apply-templates/>

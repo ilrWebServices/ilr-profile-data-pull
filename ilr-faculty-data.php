@@ -245,6 +245,16 @@ function ldap2xml($ldap) {
             $result[] = "\t\t<$whiteLabels[$attr]/>";
           }
         }
+        if (in_array($person['uid'][0], ['hck2', 'smb23', 'jz76', 'jeg68', 'cec23'])) {
+          $profile_type = 'dean';
+        } elseif ($person['cornelledutype'][0] == 'academic' && strpos($person['cornelledudeptid1'][0], 'LIB')) {
+          $profile_type = 'librarian';
+        } elseif ($person['cornelledutype'][0] == 'academic') {
+          $profile_type = 'faculty';
+        } else {
+          $profile_type = 'staff';
+        }
+        $result[] = "\t\t<ldap_profile_type>{$profile_type}</ldap_profile_type>";
         $result[] = "\t</Record>";
       }
       }
