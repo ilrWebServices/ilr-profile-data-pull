@@ -19,9 +19,7 @@ function verify_configuration() {
   , 'LDAP_ATTRIBUTES'
   , 'LDAP_FILTER'
   , 'LDAP_SERVER'
-  , 'LDAP_PORT'
-  , 'LDAP_USERNAME'
-  , 'LDAP_PASSWORD'];
+  , 'LDAP_PORT'];
 
   foreach ($config_vars as $config) {
     if (empty($GLOBALS[$config])) {
