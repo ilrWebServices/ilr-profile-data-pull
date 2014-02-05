@@ -283,6 +283,12 @@
     </ldap_display_name>
   </xsl:template>
 
+  <xsl:template match="dm:ldap_local_address">
+    <ldap_local_address>
+    <xsl:apply-templates/>
+    </ldap_local_address>
+  </xsl:template>
+
   <xsl:template match="dm:ldap_campus_address">
     <ldap_campus_address>
     <xsl:apply-templates/>

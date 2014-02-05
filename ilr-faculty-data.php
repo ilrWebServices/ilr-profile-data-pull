@@ -42,20 +42,23 @@ function verify_configuration() {
 //   , 'uid'
 //   , 'mail'];
 
-$LDAP_ATTRIBUTES = ['displayname'
-  , 'cornelleducampusaddress'
-  , 'cornelleducampusphone'
-  , 'edupersonprincipalname'
-  , 'cornelleduunivtitle1'
-  , 'cornelleduwrkngtitle1'
-  , 'cornelledutype'
-  , 'cornelledudeptid1'
-  , 'cornelledudeptname1'
-  , 'uid'
-  , 'sn'
-  , 'givenname'
-  , 'mailalternateaddress'
-  , 'edupersonnickname'];
+$LDAP_ATTRIBUTES = array(
+  'displayname',
+  'cornelleducampusaddress',
+  'cornelleducampusphone',
+  'edupersonprincipalname',
+  'cornelleduunivtitle1',
+  'cornelleduwrkngtitle1',
+  'cornelledutype',
+  'cornelledudeptid1',
+  'cornelledudeptname1',
+  'uid',
+  'sn',
+  'givenname',
+  'mailalternateaddress',
+  'edupersonnickname',
+  'cornelledulocaladdress',
+);
 
 function query_ai($uri) {
   $curl = curl_init();
@@ -218,6 +221,7 @@ function ldap2xml($ldap) {
     $whiteLabels['givenname'] = "ldap_first_name";
     $whiteLabels['mailalternateaddress'] = "ldap_mail_nickname";
     $whiteLabels['edupersonnickname'] = "ldap_nickname";
+    $whiteLabels['cornelledulocaladdress'] = "ldap_local_address";
 
       $result[] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
     $result[] = "<Data dmd:date=\"2010-02-23\" xmlns=\"http://www.digitalmeasures.com/schema/data\" xmlns:dmd=\"http://www.digitalmeasures.com/schema/data-metadata\">";
