@@ -291,7 +291,9 @@
 
   <xsl:template match="dm:ldap_campus_phone">
     <ldap_campus_phone>
-    <xsl:apply-templates/>
+    <xsl:variable name="this_campus_phone" select="."/>
+    <xsl:value-of select="substring-before($this_campus_phone,'/')" /><xsl:text>-</xsl:text>
+    <xsl:value-of select="substring-after($this_campus_phone,'/')" />
     </ldap_campus_phone>
   </xsl:template>
 
