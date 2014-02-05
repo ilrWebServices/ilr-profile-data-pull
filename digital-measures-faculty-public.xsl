@@ -505,10 +505,8 @@
   </xsl:template>
 
   <xsl:template match="dm:NARRATIVE_INTERESTS/dm:CONCENTRATION">
-    <area_of_expertise>
-      <xsl:apply-templates/>
-    </area_of_expertise><xsl:text>
-    </xsl:text>
+    <xsl:variable name="thisexpertise" select="."/>
+    <xsl:value-of select="substring-after($thisexpertise,'ILR-')" /><xsl:text>|</xsl:text>
   </xsl:template>
 
   <xsl:template match="dm:NARRATIVE_INTERESTS/dm:CONCENTRATION_OTHER">
