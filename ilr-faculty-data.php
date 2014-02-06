@@ -11,15 +11,16 @@ require 'ilr-faculty-data-conf.php';
 
 function verify_configuration() {
   $result = true;
-  $config_vars = [
-  'AI_API_URL'
-  , 'AI_USERID'
-  , 'AI_PWD'
-  , 'LDAP_START'
-  , 'LDAP_ATTRIBUTES'
-  , 'LDAP_FILTER'
-  , 'LDAP_SERVER'
-  , 'LDAP_PORT'];
+  $config_vars = array(
+    'AI_API_URL',
+    'AI_USERID',
+    'AI_PWD',
+    'LDAP_START',
+    'LDAP_ATTRIBUTES',
+    'LDAP_FILTER',
+    'LDAP_SERVER',
+    'LDAP_PORT',
+  );
 
   foreach ($config_vars as $config) {
     if (empty($GLOBALS[$config])) {
@@ -179,7 +180,7 @@ function get_ldap_info($filter, $attributes, $start) {
     ldap_close($ds);
       return $ret;
   } else {
-    return [];
+    return array();
   }
 }
 
@@ -188,10 +189,10 @@ function get_ilr_people_from_ldap() {
 }
 
 function ldap2xml($ldap) {
-  $result = [];
+  $result = array();
 
   if (count($ldap)) {
-    $whiteLabels = [];
+    $whiteLabels = array();
 
     // $whiteLabels['displayname'] = "ldap_display_name";
     // $whiteLabels['physicaldeliveryofficename'] = "ldap_campus_address";
@@ -249,7 +250,7 @@ function ldap2xml($ldap) {
             $result[] = "\t\t<$whiteLabels[$attr]/>";
           }
         }
-        if (in_array($person['uid'][0], ['hck2', 'smb23', 'jz76', 'jeg68', 'cec23'])) {
+        if (in_array($person['uid'][0], array('hck2', 'smb23', 'jz76', 'jeg68', 'cec23'))) {
           $profile_type = 'dean';
         } elseif ($person['cornelledutype'][0] == 'academic' && strpos($person['cornelledudeptid1'][0], 'LIB')) {
           $profile_type = 'librarian';
