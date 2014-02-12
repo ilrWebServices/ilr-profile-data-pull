@@ -204,7 +204,14 @@
               <links>
                 <xsl:choose>
                   <xsl:when test="dm:PCI/dm:PCI_WEBSITE/dm:WEBSITE != ''">
+                    <xsl:text disable-output-escaping="yes">&lt;</xsl:text>
+                    <xsl:text disable-output-escaping="yes">![CDATA[</xsl:text>
+                    <ul class="links">
                     <xsl:apply-templates select="dm:PCI/dm:PCI_WEBSITE"/>
+                    </ul>
+                    <xsl:text disable-output-escaping="yes">]]</xsl:text>
+                    <xsl:text disable-output-escaping="yes">>
+                    </xsl:text>
                   </xsl:when>
                 </xsl:choose>
               </links><xsl:text>
@@ -738,23 +745,14 @@
   </xsl:template>
 
   <xsl:template match="dm:PCI/dm:PCI_WEBSITE">
-    <link>
-      <href>
-        <xsl:value-of select="dm:WEBSITE"/>
-      </href>
-      <text>
-        <xsl:choose>
-          <xsl:when test="string-length(dm:DESC) = 0">
-            <xsl:value-of select="dm:TYPE"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="dm:DESC"/>
-          </xsl:otherwise>
-        </xsl:choose>
-
-      </text>
-    </link><xsl:text>
+    <xsl:text>
     </xsl:text>
+    <li class="link">
+      <xsl:variable name="hyperlink"><xsl:value-of select="dm:WEBSITE" /></xsl:variable>
+      <a href="{$hyperlink}">
+        <xsl:value-of select="dm:DESC"/>
+      </a>
+    </li>
   </xsl:template>
 
   <xsl:template name="tail">
