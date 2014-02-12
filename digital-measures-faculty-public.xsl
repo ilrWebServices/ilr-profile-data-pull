@@ -383,7 +383,10 @@
 
   <xsl:template match="dm:ilrweb_publications_doc">
     <ilrweb_publications_doc>
-    <xsl:apply-templates/>
+    <xsl:if test=". != ''">
+      <xsl:text>http://www.ilr.cornell.edu</xsl:text>
+      <xsl:apply-templates/>
+    </xsl:if>
     </ilrweb_publications_doc>
   </xsl:template>
 
