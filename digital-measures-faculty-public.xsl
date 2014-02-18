@@ -26,9 +26,9 @@
               </xsl:attribute><xsl:text>
               </xsl:text>
 
-              <xsl:apply-templates select="document('xml/ldap.xml')//*[@username=$thisnetid]"/>
+              <xsl:apply-templates select="document('https://s3.amazonaws.com/David_DeMello_ILR_AI_test/ldap.xml')//*[@username=$thisnetid]"/>
 
-              <xsl:apply-templates select="document('xml/legacy_ilr_directory_HTML.xml')//*[@username=$thisnetid]"/>
+              <xsl:apply-templates select="document('https://s3.amazonaws.com/David_DeMello_ILR_AI_test/legacy_ilr_directory_HTML.xml')//*[@username=$thisnetid]"/>
 
               <netID>
                 <xsl:value-of select="@username"/>
