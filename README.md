@@ -12,3 +12,5 @@ Before running:
 
 1. Follow the instructions in feed-server/README.md to ensure that the feed server is configured and running in a known location.
 2. Copy example.ilr-faculty-data-conf.php to ilr-faculty-data-conf.php and supply the configuration settings found at [https://cornell.box.com/s/kwevsqueaxuagcb2mqgd](https://cornell.box.com/s/kwevsqueaxuagcb2mqgd). If you have changed the location of the feed-server, then change the configuration accordingly.
+3. Copy example.aws-sdk-conf.php to aws-sdk-conf.php and supply the location of an existing AWS S3 bucket and the key and secret of an AWS user with permissions to write to that bucket.
+4. To install the AWS-SDK-PHP library, run `curl -sS https://getcomposer.org/installer | php && php composer.phar install` to install the dependencies.
