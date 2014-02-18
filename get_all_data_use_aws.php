@@ -7,24 +7,29 @@ date_default_timezone_set('EST');
 
 require 'ilr-faculty-data.php';
 require 'vendor/autoload.php';
+require 'aws-sdk-conf.php';
 
 if (! verify_configuration()) {
   echo "Error: Please ensure a complete configuration has been supplied for ilr-faculty-data.php.";
   exit();
 }
 
+$aws_key = $GLOBALS['AWS_KEY'];
+$aws_secret = $GLOBALS['AWS_SECRET'];
+$aws_bucket = $GLOBALS['AWS_BUCKET'];
+
 use Aws\S3\S3Client;
 $client = S3Client::factory(array(
-  'key' => 'AKIAJIXGZUNGGWZOHEVQ',
-  'secret' => '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',
+  'key' => $aws_key,
+  'secret' => $aws_secret,
 ));
 
 // Register the stream wrapper from an S3Client object
 $client->registerStreamWrapper();
 
-function set_perms(&$aws_Client, $file_name) {
+function set_perms(&$aws_Client, $bucket, $file_name) {
   $aws_Client->putObjectAcl(array(
-    'Bucket'     => 'David_DeMello_ILR_AI_test',
+    'Bucket'     => $bucket,
     'Key'        => $file_name,
     'ACL'        => 'public-read'
   ));
@@ -37,20 +42,20 @@ foreach( array(
   'ldap.xml',
   'legacy_ilr_directory_HTML.xml',
   ) as $out_file) {
-  if (file_exists('s3://David_DeMello_ILR_AI_test/' . $out_file)) {
-    unlink('s3://David_DeMello_ILR_AI_test/' . $out_file);
+  if (file_exists("s3://{$aws_bucket}/" . $out_file)) {
+    unlink("s3://{$aws_bucket}/" . $out_file);
   }
 }
 
 /* Build the feed of profiles from all data sources. */
 
 $ldap = get_ilr_people_from_ldap();
-file_put_contents("s3://David_DeMello_ILR_AI_test/ldap.xml", ldap2xml($ldap));
-set_perms($client, 'ldap.xml');
+file_put_contents("s3://{$aws_bucket}/ldap.xml", ldap2xml($ldap));
+set_perms($client, $aws_bucket, 'ldap.xml');
 
 $ilrweb_data = get_legacy_ilr_directory_info();
-file_put_contents("s3://David_DeMello_ILR_AI_test/legacy_ilr_directory_HTML.xml", $ilrweb_data);
-set_perms($client, 'legacy_ilr_directory_HTML.xml');
+file_put_contents("s3://{$aws_bucket}/legacy_ilr_directory_HTML.xml", $ilrweb_data);
+set_perms($client, $aws_bucket, 'legacy_ilr_directory_HTML.xml');
 
 /* Accumulate the AI data for all people in the ldap file. */
 
@@ -80,6 +85,6 @@ foreach( $ldap as $person) {
 $raw_xml .= '</Data>';
 
 // Run the XSLT transform on the main xml file, which will fold in the fields from lpad and legacy_ilr_directory_HTML
-$transformed_xml = 's3://David_DeMello_ILR_AI_test/ilr_profiles_feed.xml';
+$transformed_xml = "s3://{$aws_bucket}/ilr_profiles_feed.xml";
 file_put_contents($transformed_xml, stripEmptyCDATA(xslt_transform($raw_xml, get_ilr_profiles_transform_xsl(), 'xml')));
-set_perms($client, 'ilr_profiles_feed.xml');
+set_perms($client, $aws_bucket, 'ilr_profiles_feed.xml');
