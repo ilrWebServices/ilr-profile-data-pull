@@ -6,8 +6,11 @@
 date_default_timezone_set('EST');
 
 require 'ilr-faculty-data.php';
-require 'vendor/autoload.php';
-require 'aws-sdk-conf.php';
+require '../../vendor/autoload.php';
+
+if (file_exists(CONFIG_PATH)) {
+  require(CONFIG_PATH . 'aws-sdk-conf.php');
+}
 
 if (! verify_configuration()) {
   echo "Error: Please ensure a complete configuration has been supplied for ilr-faculty-data.php.";

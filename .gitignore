@@ -1,7 +1,7 @@
 tmp/
-xml/
-ilr-faculty-data-conf.php
+config/ilr-faculty-data-conf.php
+config/aws-sdk-conf.php
 feed-server/feed-config.cfm
-aws-sdk-conf.php
 composer.lock
 vendor/
+scripts/ilr-profile-data-pull/xml/

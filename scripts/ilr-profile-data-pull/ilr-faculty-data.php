@@ -7,7 +7,11 @@
  *
  */
 
-require 'ilr-faculty-data-conf.php';
+require '../../config/env.php';
+
+if (file_exists(CONFIG_PATH)) {
+  require(CONFIG_PATH . 'ilr-faculty-data-conf.php');
+}
 
 function verify_configuration() {
   $result = true;
